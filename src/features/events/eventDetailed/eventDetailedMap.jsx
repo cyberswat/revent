@@ -7,6 +7,7 @@ function Marker() {
 }
 
 export default function EventDetailedMap({ latLng }) {
+  console.log(latLng)
   const zoom = 14
   return (
     <Segment attached='bottom' style={{ padding: 0 }}>
