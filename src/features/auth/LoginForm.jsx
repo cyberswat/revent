@@ -3,7 +3,7 @@ import ModalWrapper from '../../app/common/modals/modalWrapper'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import MyTextInput from '../../app/common/form/MyTextInput'
-import { Button } from 'semantic-ui-react'
+import { Button, Label } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
 import { closeModal } from '../../app/common/modals/modalReducer'
 import { signInWithEmail } from '../../app/firestore/firebaseService'
@@ -21,18 +21,18 @@ export default function LoginForm() {
           email: Yup.string().required().email(),
           password: Yup.string().required(),
         })}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
             await signInWithEmail(values)
             setSubmitting(false)
             dispatch(closeModal())
           } catch (error) {
+            setErrors({ auth: 'Problem with credentials.' })
             setSubmitting(false)
-            console.log(error)
           }
         }}
       >
-        {({ isSubmitting, isValid, dirty }) => (
+        {({ isSubmitting, isValid, dirty, errors }) => (
           <Form className='ui form'>
             <MyTextInput name='email' placeholder='Email Address' />
             <MyTextInput
@@ -40,6 +40,14 @@ export default function LoginForm() {
               placeholder='Password'
               type='password'
             />
+            {errors.auth && (
+              <Label
+                basic
+                color='red'
+                style={{ marginBottom: 10 }}
+                content={errors.auth}
+              />
+            )}
             <Button
               loading={isSubmitting}
               disabled={!isValid || !dirty || isSubmitting}
