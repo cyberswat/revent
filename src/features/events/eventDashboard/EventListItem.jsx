@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Icon, Item, Label, List, Segment } from 'semantic-ui-react'
 import EventListAttendee from './EventListAttendee'
 import { format } from 'date-fns'
-import { deleteEventInFireStore } from '../../../app/firestore/fireStoreService'
+import { deleteEventInFireStore } from '../../../app/firestore/firestoreService'
 
 export default function EventListItem({ event }) {
   return (

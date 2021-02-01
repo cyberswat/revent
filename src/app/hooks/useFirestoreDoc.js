@@ -5,7 +5,7 @@ import {
   asyncActionFinish,
   asyncActionStart,
 } from '../async/asyncReducer'
-import { dataFromSnapshot } from '../firestore/fireStoreService'
+import { dataFromSnapshot } from '../firestore/firestoreService'
 
 export default function useFirestoreDoc({
   query,

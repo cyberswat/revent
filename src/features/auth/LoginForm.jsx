@@ -7,6 +7,7 @@ import { Button } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
 import { signInUser } from './authActions'
 import { closeModal } from '../../app/common/modals/modalReducer'
+import { signInWithEmail } from '../../app/firestore/firebaseService'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -21,10 +22,15 @@ export default function LoginForm() {
           email: Yup.string().required().email(),
           password: Yup.string().required(),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          dispatch(signInUser(values))
-          setSubmitting(false)
-          dispatch(closeModal())
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            await signInWithEmail(values)
+            setSubmitting(false)
+            dispatch(closeModal())
+          } catch (error) {
+            setSubmitting(false)
+            console.log(error)
+          }
         }}
       >
         {({ isSubmitting, isValid, dirty }) => (
