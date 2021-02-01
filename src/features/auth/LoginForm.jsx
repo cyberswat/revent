@@ -30,7 +30,11 @@ export default function LoginForm() {
         {({ isSubmitting, isValid, dirty }) => (
           <Form className='ui form'>
             <MyTextInput name='email' placeholder='Email Address' />
-            <MyTextInput name='password' placeholder='Password' />
+            <MyTextInput
+              name='password'
+              placeholder='Password'
+              type='password'
+            />
             <Button
               loading={isSubmitting}
               disabled={!isValid || !dirty || isSubmitting}
