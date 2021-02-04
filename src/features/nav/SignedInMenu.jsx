@@ -10,8 +10,8 @@ export default function SignedInMenu() {
   const { currentUser } = useSelector((state) => state.auth)
   async function handleSignOut() {
     try {
-      await signOutFirebase()
       history.push('/')
+      await signOutFirebase()
     } catch (error) {
       toast.error(error.message)
     }
