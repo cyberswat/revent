@@ -30,7 +30,7 @@ export async function socialLogin(selectedProvider) {
     provider = new firebase.auth.GoogleAuthProvider()
   }
   try {
-    const result = await firebase.auth().signInWithPopup(provider)
+    const result = await firebase.auth().signInWithRedirect(provider)
     console.log(result)
     if (result.additionalUserInfo.isNewUser) {
       await setUserProfileData(result.user)
