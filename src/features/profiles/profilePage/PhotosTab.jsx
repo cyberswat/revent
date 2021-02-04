@@ -31,6 +31,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
     try {
       await setMainPhoto(photo)
     } catch (error) {
+      console.log(error)
       toast.error(error.message)
     } finally {
       setUpdating({ isUpdating: false, target: null })
