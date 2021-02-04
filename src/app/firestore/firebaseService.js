@@ -39,3 +39,8 @@ export async function socialLogin(selectedProvider) {
     toast.error(error)
   }
 }
+
+export function updateUserPassword(creds) {
+  const user = firebase.auth().currentUser
+  return user.updatePassword(creds.newPassword1)
+}

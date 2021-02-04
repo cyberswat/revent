@@ -1,10 +1,10 @@
-import { Formik } from 'formik'
 import React from 'react'
-import { Button, Form, Header, Label, Segment } from 'semantic-ui-react'
+import { Segment, Header, Button, Label } from 'semantic-ui-react'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import MyTextInput from '../../app/common/form/MyTextInput'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { updateUserPassword } from '../../app/firestore/firebaseService'
 
 export default function AccountPage() {
   const { currentUser } = useSelector((state) => state.auth)
@@ -14,18 +14,24 @@ export default function AccountPage() {
       {currentUser.providerId === 'password' && (
         <>
           <Header color='teal' sub content='Change Password' />
-          <p>Use this form to change your password.</p>
+          <p>Use this form to change your password</p>
           <Formik
             initialValues={{ newPassword1: '', newPassword2: '' }}
             validationSchema={Yup.object({
-              newPassword1: Yup.string().required('Password is required.'),
+              newPassword1: Yup.string().required('Password is required'),
               newPassword2: Yup.string().oneOf(
                 [Yup.ref('newPassword1'), null],
                 'Passwords do not match'
               ),
             })}
-            onSubmit={(values) => {
-              console.log(values)
+            onSubmit={async (values, { setSubmitting, setErrors }) => {
+              try {
+                await updateUserPassword(values)
+              } catch (error) {
+                setErrors({ auth: error.message })
+              } finally {
+                setSubmitting(false)
+              }
             }}
           >
             {({ errors, isSubmitting, isValid, dirty }) => (
@@ -49,13 +55,13 @@ export default function AccountPage() {
                   />
                 )}
                 <Button
-                  loading={isSubmitting}
-                  disabled={!isValid || !dirty || isSubmitting}
+                  style={{ display: 'block' }}
                   type='submit'
-                  fluid
+                  disabled={!isValid || isSubmitting || !dirty}
+                  loading={isSubmitting}
                   size='large'
-                  color='teal'
-                  content='Update Password'
+                  positive
+                  content='Update password'
                 />
               </Form>
             )}
@@ -69,7 +75,7 @@ export default function AccountPage() {
           <Button
             icon='google'
             color='google plus'
-            href='https://accounts.google.com/'
+            href='https://accounts.google.com'
             content='Go to Google'
           />
         </>
