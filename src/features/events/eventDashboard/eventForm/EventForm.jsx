@@ -19,7 +19,7 @@ import {
   listenToEventFromFirestore,
   updateEventInFirestore,
 } from '../../../../app/firestore/firestoreService'
-import LoadingComponent from '../../../../app/layout/loadingComponent'
+import LoadingComponent from '../../../../app/layout/LoadingComponent'
 import { toast } from 'react-toastify'
 
 export default function EventForm({ match, history }) {
