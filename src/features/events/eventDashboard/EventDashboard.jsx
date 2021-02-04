@@ -22,9 +22,9 @@ export default function EventDashboard() {
     setPredicate(new Map(predicate.set(key, value)))
   }
   useFirestoreCollection({
-    query: () => listenToEventsFromFirestore(),
+    query: () => listenToEventsFromFirestore(predicate),
     data: (events) => dispatch(listenToEvents(events)),
-    deps: [dispatch],
+    deps: [dispatch, predicate],
   })
 
   return (
