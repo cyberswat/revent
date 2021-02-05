@@ -11,6 +11,7 @@ const firebaseConfig = {
   storageBucket: 'reventscourse-80d46.appspot.com',
   messagingSenderId: '377322959826',
   appId: '1:377322959826:web:25acc90b311b19e4168e0b',
+  databaseURL: 'https://reventscourse-80d46-default-rtdb.firebaseio.com',
 }
 
 firebase.initializeApp(firebaseConfig)
