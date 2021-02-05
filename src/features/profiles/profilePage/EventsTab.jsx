@@ -25,7 +25,7 @@ export default function EventsTab({ profile, isCurrentUser }) {
     { menuItem: 'Hosting', pane: { key: 'hosting' } },
   ]
   return (
-    <Tab.Pane>
+    <Tab.Pane loading={loading}>
       <Grid>
         <Grid.Column width={16}>
           <Header floated='left' icon='calendar' content='Events' />
@@ -35,7 +35,6 @@ export default function EventsTab({ profile, isCurrentUser }) {
             onTabChange={(e, data) => setActiveTab(data.activeIndex)}
             panes={panes}
             menu={{ secondary: true, pointing: true }}
-            loading={loading}
           />
           <Card.Group itemsPerRow={5} style={{ marginTop: 10 }}>
             {profileEvents.map((event) => (
