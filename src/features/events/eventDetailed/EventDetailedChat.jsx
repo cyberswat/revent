@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Segment, Comment, Header } from 'semantic-ui-react'
 import { getEventChatRef } from '../../../app/firestore/firebaseService'
+import { CLEAR_COMMENTS } from '../eventConstants'
 import EventDetailedChatForm from './EventDetailedChatForm'
 
 export default function EventDetailedChat({ eventId }) {
@@ -14,6 +15,10 @@ export default function EventDetailedChat({ eventId }) {
       if (!snapshot.exists()) return
       console.log(snapshot.val().reverse())
     })
+    return () => {
+      dispatch({ type: CLEAR_COMMENTS })
+      getEventChatRef().off()
+    }
   }, [eventId, dispatch])
 
   return (
