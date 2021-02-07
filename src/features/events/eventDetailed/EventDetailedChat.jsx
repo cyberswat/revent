@@ -12,7 +12,7 @@ export default function EventDetailedChat({ eventId }) {
   useEffect(() => {
     getEventChatRef(eventId).on('value', (snapshot) => {
       if (!snapshot.exists()) return
-      console.log(snapshot.val())
+      console.log(snapshot.val().reverse())
     })
   }, [eventId, dispatch])
 
@@ -29,6 +29,7 @@ export default function EventDetailedChat({ eventId }) {
       </Segment>
 
       <Segment attached>
+        <EventDetailedChatForm eventId={eventId} />{' '}
         <Comment.Group>
           {comments.map((comment) => (
             <Comment key={comment.id}>
@@ -55,7 +56,6 @@ export default function EventDetailedChat({ eventId }) {
             </Comment>
           ))}
         </Comment.Group>
-        <EventDetailedChatForm eventId={eventId} />{' '}
       </Segment>
     </>
   )

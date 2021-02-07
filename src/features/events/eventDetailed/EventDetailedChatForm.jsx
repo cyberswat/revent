@@ -1,9 +1,9 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import { toast } from 'react-toastify'
 import { addEventChatComment } from '../../../app/firestore/firebaseService'
 import MyTextArea from '../../../app/common/form/MyTextArea'
-import { Button } from 'semantic-ui-react'
+import { Button, Loader } from 'semantic-ui-react'
 
 export default function EventDetailedChatForm({ eventId }) {
   return (
@@ -21,20 +21,29 @@ export default function EventDetailedChatForm({ eventId }) {
         }
       }}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, handleSubmit }) => (
         <Form className='ui form'>
-          <MyTextArea
-            name='comment'
-            placeholder='Please enter your comment'
-            rows={2}
-          />
-          <Button
-            loading={isSubmitting}
-            content='Add Reply'
-            icon='edit'
-            primary
-            type='submit'
-          />
+          <Field name='comment'>
+            {({ field }) => (
+              <div style={{ position: 'relative' }}>
+                <Loader active={isSubmitting} />
+                <textarea
+                  rows='2'
+                  {...field}
+                  placeholder='Enter your comment (Enter to submit, SHIFT + Enter for new line)'
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && e.shiftKey) {
+                      return
+                    }
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      handleSubmit()
+                    }
+                  }}
+                ></textarea>
+              </div>
+            )}
+          </Field>
         </Form>
       )}
     </Formik>
