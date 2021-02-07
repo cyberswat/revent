@@ -1,5 +1,5 @@
 import { formatDistance } from 'date-fns'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Segment, Comment, Header } from 'semantic-ui-react'
 import { getEventChatRef } from '../../../app/firestore/firebaseService'
@@ -9,6 +9,14 @@ import EventDetailedChatForm from './EventDetailedChatForm'
 export default function EventDetailedChat({ eventId }) {
   const dispatch = useDispatch()
   const { comments } = useSelector((state) => state.event)
+  const [showReplyForm, setShowReplyForm] = useState({
+    open: false,
+    commentId: null,
+  })
+
+  function handleCloseReplyForm() {
+    setShowReplyForm({ open: false, commentId: null })
+  }
 
   useEffect(() => {
     getEventChatRef(eventId).on('value', (snapshot) => {
@@ -55,7 +63,21 @@ export default function EventDetailedChat({ eventId }) {
                   ))}
                 </Comment.Text>
                 <Comment.Actions>
-                  <Comment.Action>Reply</Comment.Action>
+                  <Comment.Action
+                    onClick={() =>
+                      setShowReplyForm({ open: true, commentId: comment.id })
+                    }
+                  >
+                    Reply
+                  </Comment.Action>
+                  {showReplyForm.open &&
+                    showReplyForm.commentId === comment.id && (
+                      <EventDetailedChatForm
+                        eventId={eventId}
+                        parentId={comment.id}
+                        closeForm={handleCloseReplyForm}
+                      />
+                    )}{' '}
                 </Comment.Actions>
               </Comment.Content>
             </Comment>
