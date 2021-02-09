@@ -28,8 +28,14 @@ export default function ProfileContent({ profile, isCurrentUser }) {
         <EventsTab profile={profile} isCurrentUser={isCurrentUser} />
       ),
     },
-    { menuItem: 'Followers', render: () => <FollowingTab profile={profile} /> },
-    { menuItem: 'Following', render: () => <FollowingTab profile={profile} /> },
+    {
+      menuItem: 'Followers',
+      render: () => <FollowingTab profile={profile} activeTab={activeTab} />,
+    },
+    {
+      menuItem: 'Following',
+      render: () => <FollowingTab profile={profile} activeTab={activeTab} />,
+    },
   ]
   return (
     <Tab
