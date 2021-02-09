@@ -63,8 +63,8 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
         </Grid.Column>
         <Grid.Column width={4}>
           <Statistic.Group>
-            <Statistic label='Followers' value={10} />
-            <Statistic label='Following' value={5} />
+            <Statistic label='Followers' value={profile.followerCount || 0} />
+            <Statistic label='Following' value={profile.followingCount || 0} />
           </Statistic.Group>
           {!isCurrentUser && (
             <>
