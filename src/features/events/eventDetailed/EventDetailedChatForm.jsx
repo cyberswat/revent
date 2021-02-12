@@ -1,9 +1,9 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik'
-import { toast } from 'react-toastify'
 import { addEventChatComment } from '../../../app/firestore/firebaseService'
 import { Loader } from 'semantic-ui-react'
 import * as Yup from 'yup'
+import { doToast } from '../../../app/common/util/util'
 
 export default function EventDetailedChatForm({
   eventId,
@@ -21,7 +21,7 @@ export default function EventDetailedChatForm({
           await addEventChatComment(eventId, { ...values, parentId })
           resetForm()
         } catch (error) {
-          toast.error(error.message)
+          doToast(error)
         } finally {
           setSubmitting(false)
           closeForm({ open: false, commentId: null })

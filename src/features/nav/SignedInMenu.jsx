@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { Dropdown, Image, Menu } from 'semantic-ui-react'
+import { doToast } from '../../app/common/util/util'
 import { signOutFirebase } from '../../app/firestore/firebaseService'
 
 export default function SignedInMenu() {
@@ -13,7 +13,7 @@ export default function SignedInMenu() {
       history.push('/')
       await signOutFirebase()
     } catch (error) {
-      toast.error(error.message)
+      doToast(error)
     }
   }
   return (

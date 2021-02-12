@@ -9,8 +9,8 @@ import {
 } from '../../../app/firestore/firestoreService'
 import { useDispatch, useSelector } from 'react-redux'
 import { listenToUserPhotos } from '../profileActions'
-import { toast } from 'react-toastify'
 import { deleteFromFirebaseStorage } from '../../../app/firestore/firebaseService'
+import { doToast } from '../../../app/common/util/util'
 
 export default function PhotosTab({ profile, isCurrentUser }) {
   const dispatch = useDispatch()
@@ -31,8 +31,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
     try {
       await setMainPhoto(photo)
     } catch (error) {
-      console.log(error)
-      toast.error(error.message)
+      doToast(error)
     } finally {
       setUpdating({ isUpdating: false, target: null })
     }
@@ -44,7 +43,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
       await deleteFromFirebaseStorage(photo.name)
       await deletePhotoFromCollection(photo.id)
     } catch (error) {
-      toast.error(error.message)
+      doToast(error)
     } finally {
       setDeleting({ isDeleting: false, target: null })
     }

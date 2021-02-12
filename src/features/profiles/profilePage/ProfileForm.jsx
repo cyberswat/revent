@@ -4,8 +4,8 @@ import MyTextInput from '../../../app/common/form/MyTextInput'
 import MyTextArea from '../../../app/common/form/MyTextArea'
 import { Button } from 'semantic-ui-react'
 import * as Yup from 'yup'
-import { toast } from 'react-toastify'
 import { updateUserProfile } from '../../../app/firestore/firestoreService'
+import { doToast } from '../../../app/common/util/util'
 
 export default function ProfileForm({ profile }) {
   return (
@@ -21,7 +21,7 @@ export default function ProfileForm({ profile }) {
         try {
           await updateUserProfile(values)
         } catch (error) {
-          toast.error(error.message)
+          doToast(error)
         } finally {
           setSubmitting(false)
         }

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -15,4 +16,9 @@ export function createDataTree(dataset) {
     else dataTree.push(hashtable[a.id])
   })
   return dataTree
+}
+
+export function doToast(error) {
+  console.log(error)
+  toast.error(error.message)
 }

@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify'
+import { doToast } from '../common/util/util'
 import firebase from '../config/firebase'
 import { setUserProfileData } from './firestoreService'
 
@@ -39,12 +39,11 @@ export async function socialLogin(selectedProvider) {
   }
   try {
     const result = await firebase.auth().signInWithRedirect(provider)
-    console.log(result)
     if (result.additionalUserInfo.isNewUser) {
       await setUserProfileData(result.user)
     }
   } catch (error) {
-    toast.error(error)
+    doToast(error)
   }
 }
 

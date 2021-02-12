@@ -20,7 +20,7 @@ import {
   updateEventInFirestore,
 } from '../../../../app/firestore/firestoreService'
 import LoadingComponent from '../../../../app/layout/LoadingComponent'
-import { toast } from 'react-toastify'
+import { doToast } from '../../../../app/common/util/util'
 
 export default function EventForm({ match, history }) {
   const dispatch = useDispatch()
@@ -66,7 +66,7 @@ export default function EventForm({ match, history }) {
       setLoadingCancel(false)
     } catch (error) {
       setLoadingCancel(true)
-      toast.error(error.message)
+      doToast(error)
     }
   }
   useFirestoreDoc({
@@ -92,7 +92,7 @@ export default function EventForm({ match, history }) {
             setSubmitting(false)
             history.push('/events')
           } catch (error) {
-            toast.error(error.message)
+            doToast(error)
             setSubmitting(false)
           }
         }}

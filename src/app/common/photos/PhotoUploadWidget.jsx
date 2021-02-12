@@ -1,12 +1,11 @@
 import cuid from 'cuid'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
 import { Button, Grid, Header } from 'semantic-ui-react'
 import { uploadToFirebaseStorage } from '../../firestore/firebaseService'
 import { updateUserProfilePhoto } from '../../firestore/firestoreService'
 import PhotoWidgetCropper from './PhotoWidgetCropper'
 import PhotoWidgetDropzone from './PhotoWidgetDropzone'
-import { getFileExtension } from '../util/util'
+import { doToast, getFileExtension } from '../util/util'
 
 export default function PhotoUploadWidget({ setEditMode }) {
   const [files, setFiles] = useState([])
@@ -24,7 +23,7 @@ export default function PhotoUploadWidget({ setEditMode }) {
         console.log('Upload is ' + progress + '% done')
       },
       (error) => {
-        toast.error(error.messege)
+        doToast(error)
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -35,7 +34,7 @@ export default function PhotoUploadWidget({ setEditMode }) {
               setEditMode(false)
             })
             .catch((error) => {
-              toast.error(error.message)
+              doToast(error)
               setLoading(false)
             })
         })

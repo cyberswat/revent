@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
+
 import {
   Segment,
   Grid,
@@ -11,6 +11,7 @@ import {
   Reveal,
   Button,
 } from 'semantic-ui-react'
+import { doToast } from '../../../app/common/util/util'
 import {
   followUser,
   getFollowingDoc,
@@ -34,7 +35,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
           dispatch(setFollowUser())
         }
       } catch (error) {
-        toast.error(error.message)
+        doToast(error)
       }
     }
     fetchFollowingDoc().then(() => setLoading(false))
@@ -48,7 +49,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
       await followUser(profile)
       dispatch(setFollowUser())
     } catch (error) {
-      toast.error(error.message)
+      doToast(error)
     } finally {
       setLoading(false)
     }
@@ -60,7 +61,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
       await unfollowUser(profile)
       dispatch(setUnfollowUser())
     } catch (error) {
-      toast.error(error.message)
+      doToast(error)
     } finally {
       setLoading(false)
     }
