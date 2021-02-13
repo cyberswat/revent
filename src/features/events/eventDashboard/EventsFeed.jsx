@@ -4,6 +4,7 @@ import { Feed, Header, Segment } from 'semantic-ui-react'
 import { firebaseObjectToArray, getUserFeedRef } from '../../../app/firestore/firebaseService';
 import { listenToFeed } from '../../profiles/profileActions';
 import { useEffect } from 'react';
+import EventFeedItem from './EventFeedItem';
 
 export default function EventsFeed() {
     const dispatch = useDispatch();
@@ -21,21 +22,15 @@ export default function EventsFeed() {
             getUserFeedRef().off()
         }
     }, [dispatch])
-    
-    const image = '/assets/user.png'
-    const date = '3 days ago'
-    const summary = 'Dianna joined an event'
 
     return (
         <>
             <Header attached color='teal' icon='newspaper' content='News Feed' />
             <Segment attached='bottom'>
                 <Feed>
-                    <Feed.Event image={image} date={date} summary={summary} />
-                    <Feed.Event image={image} date={date} summary={summary} />
-                    <Feed.Event image={image} date={date} summary={summary} />
-                    <Feed.Event image={image} date={date} summary={summary} />
-                    <Feed.Event image={image} date={date} summary={summary} />
+                    {feed.map(post => (
+                        <EventFeedItem post={post} key={post.id} />
+                    ))}
                 </Feed>
             </Segment>
         </>
