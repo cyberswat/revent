@@ -3,24 +3,24 @@ import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { Button, Confirm, Header, Segment } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listenToEvents } from '../../eventActions'
+import { listenToEvents } from '../eventActions'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import MyTextInput from '../../../../app/common/form/MyTextInput'
-import MyTextArea from '../../../../app/common/form/MyTextArea'
-import MySelectInput from '../../../../app/common/form/MySelectInput'
-import { categoryData } from '../../../../app/api/categoryOptions'
-import MyDateInput from '../../../../app/common/form/MyDateInput'
-import MyPlaceInput from '../../../../app/common/form/MyPlaceInputs'
-import useFirestoreDoc from '../../../../app/hooks/useFirestoreDoc'
+import MyTextInput from '../../../app/common/form/MyTextInput'
+import MyTextArea from '../../../app/common/form/MyTextArea'
+import MySelectInput from '../../../app/common/form/MySelectInput'
+import { categoryData } from '../../../app/api/categoryOptions'
+import MyDateInput from '../../../app/common/form/MyDateInput'
+import MyPlaceInput from '../../../app/common/form/MyPlaceInputs'
+import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc'
 import {
   addEventToFirestore,
   cancelEventToggle,
   listenToEventFromFirestore,
   updateEventInFirestore,
-} from '../../../../app/firestore/firestoreService'
-import LoadingComponent from '../../../../app/layout/LoadingComponent'
-import { doToast } from '../../../../app/common/util/util'
+} from '../../../app/firestore/firestoreService'
+import LoadingComponent from '../../../app/layout/LoadingComponent'
+import { doToast } from '../../../app/common/util/util'
 
 export default function EventForm({ match, history }) {
   const dispatch = useDispatch()
