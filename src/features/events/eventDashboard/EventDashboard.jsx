@@ -5,7 +5,7 @@ import EventListItemPlaceholder from './EventListItemPlaceholder'
 import EventFilters from './EventFilters'
 import EventsFeed from './EventsFeed'
 import { useEffect } from 'react';
-import { fetchEvents } from '../eventActions'
+import { clearEvents, fetchEvents } from '../eventActions'
 import { Grid, Loader } from 'semantic-ui-react'
 
 export default function EventDashboard() {
@@ -22,7 +22,10 @@ export default function EventDashboard() {
       ['filter', 'all'],
     ])
   )
+
   function handleSetPredicate(key, value) {
+    dispatch(clearEvents())
+    setLastDocSnapshot(null)
     setPredicate(new Map(predicate.set(key, value)))
   }
 
@@ -32,6 +35,9 @@ export default function EventDashboard() {
       setLastDocSnapshot(lastVisible)
       setLoadingInitial(false)
     })
+    return () => {
+      dispatch(clearEvents())
+    }
   }, [dispatch, predicate]);
 
   function handleFetchNextEvents() {
