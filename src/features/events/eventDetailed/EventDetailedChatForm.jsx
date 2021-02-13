@@ -1,29 +1,25 @@
-import React from 'react'
-import { Formik, Form, Field } from 'formik'
-import { addEventChatComment } from '../../../app/firestore/firebaseService'
-import { Loader } from 'semantic-ui-react'
-import * as Yup from 'yup'
-import { doToast } from '../../../app/common/util/util'
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
+import { toast } from 'react-toastify';
+import { addEventChatComment } from '../../../app/firestore/firebaseService';
+import { Loader } from 'semantic-ui-react';
+import * as Yup from 'yup';
 
-export default function EventDetailedChatForm({
-  eventId,
-  parentId,
-  closeForm,
-}) {
+export default function EventDetailedChatForm({ eventId, parentId, closeForm }) {
   return (
     <Formik
       initialValues={{ comment: '' }}
       validationSchema={Yup.object({
-        comment: Yup.string().required(),
+        comment: Yup.string().required()
       })}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         try {
-          await addEventChatComment(eventId, { ...values, parentId })
-          resetForm()
+          await addEventChatComment(eventId, { ...values, parentId });
+          resetForm();
         } catch (error) {
-          doToast(error)
+          toast.error(error.message);
         } finally {
-          setSubmitting(false)
+          setSubmitting(false);
           closeForm({ open: false, commentId: null })
         }
       }}
@@ -35,24 +31,25 @@ export default function EventDetailedChatForm({
               <div style={{ position: 'relative' }}>
                 <Loader active={isSubmitting} />
                 <textarea
-                  rows='2'
-                  {...field}
+                  rows="2" {...field}
                   placeholder='Enter your comment (Enter to submit, SHIFT + Enter for new line)'
                   onKeyPress={(e) => {
                     if (e.key === 'Enter' && e.shiftKey) {
-                      return
+                      return;
                     }
                     if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault()
-                      isValid && handleSubmit()
+                      e.preventDefault();
+                      isValid && handleSubmit();
                     }
                   }}
-                ></textarea>
+                >
+
+                </textarea>
               </div>
             )}
           </Field>
         </Form>
       )}
     </Formik>
-  )
+  );
 }

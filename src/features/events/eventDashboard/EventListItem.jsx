@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Button, Icon, Item, Label, List, Segment } from 'semantic-ui-react'
-import EventListAttendee from './EventListAttendee'
-import { format } from 'date-fns'
-import { deleteEventInFireStore } from '../../../app/firestore/firestoreService'
+import React from 'react';
+import { Segment, Item, Icon, List, Button, Label } from 'semantic-ui-react';
+import EventListAttendee from './EventListAttendee';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 export default function EventListItem({ event }) {
+
   return (
     <Segment.Group>
       <Segment>
@@ -13,11 +13,8 @@ export default function EventListItem({ event }) {
           <Item>
             <Item.Image size='tiny' circular src={event.hostPhotoURL} />
             <Item.Content>
-              <Item.Header>{event.title}</Item.Header>
-              <Item.Description>
-                Hosted by{' '}
-                <Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link>{' '}
-              </Item.Description>
+              <Item.Header content={event.title} />
+              <Item.Description>Hosted by <Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link> </Item.Description>
               {event.isCancelled && (
                 <Label
                   style={{ top: '-40px' }}
@@ -32,10 +29,8 @@ export default function EventListItem({ event }) {
       </Segment>
       <Segment>
         <span>
-          <Icon name='clock' />
-          {format(event.date, 'MMMM d, yyyy h:mm a')}
-          <Icon name='marker' />
-          {event.venue.address}
+          <Icon name='clock' /> {format(event.date, 'MMMM d, yyyy h:mm a')}
+          <Icon name='marker' /> {event.venue.address}
         </span>
       </Segment>
       <Segment secondary>
@@ -48,19 +43,12 @@ export default function EventListItem({ event }) {
       <Segment clearing>
         <div>{event.description}</div>
         <Button
-          onClick={() => deleteEventInFireStore(event.id)}
-          color='red'
-          floated='right'
-          content='Delete'
-        />
-        <Button
-          as={Link}
-          to={`events/${event.id}`}
+          as={Link} to={`/events/${event.id}`}
           color='teal'
           floated='right'
           content='View'
         />
       </Segment>
     </Segment.Group>
-  )
+  );
 }
