@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { addEventChatComment } from '../../../app/firestore/firebaseService';
 import { Loader } from 'semantic-ui-react';
 import * as Yup from 'yup';
+import { doToast } from '../../../app/common/util/util';
 
 export default function EventDetailedChatForm({ eventId, parentId, closeForm }) {
   return (
@@ -17,7 +18,7 @@ export default function EventDetailedChatForm({ eventId, parentId, closeForm }) 
           await addEventChatComment(eventId, { ...values, parentId });
           resetForm();
         } catch (error) {
-          toast.error(error.message);
+          doToast(error);
         } finally {
           setSubmitting(false);
           closeForm({ open: false, commentId: null })

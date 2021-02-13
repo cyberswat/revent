@@ -10,6 +10,7 @@ import {
 } from '../../../app/firestore/firestoreService'
 import { useSelector } from 'react-redux'
 import UnauthModal from '../../auth/UnauthModal'
+import { doToast } from '../../../app/common/util/util'
 
 const eventImageStyle = {
   filter: 'brightness(30%)',
@@ -34,7 +35,7 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
     try {
       await addUserAttendance(event)
     } catch (error) {
-      toast.error(error.message)
+      doToast(error)
     } finally {
       setLoading(false)
     }
@@ -45,7 +46,7 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
     try {
       await cancelUserAttendance(event)
     } catch (error) {
-      toast.error(error.message)
+      doToast(error)
     } finally {
       setLoading(false)
     }
