@@ -1,6 +1,7 @@
 import {
   CLEAR_FOLLOWINGS,
   LISTEN_TO_CURRENT_USER_PROFILE,
+  LISTEN_TO_FEED,
   LISTEN_TO_FOLLOWERS,
   LISTEN_TO_FOLLOWINGS,
   LISTEN_TO_SELECTED_USER_PROFILE,
@@ -18,6 +19,7 @@ const initialState = {
   followers: [],
   followings: [],
   followingUser: false,
+  feed: []
 }
 
 export default function profileReducer(
@@ -71,7 +73,11 @@ export default function profileReducer(
         followers: [],
         followings: [],
       }
-    default: {
+    case LISTEN_TO_FEED:
+      return {
+        ...state,
+        feed: payload,
+      };    default: {
       return state
     }
   }
