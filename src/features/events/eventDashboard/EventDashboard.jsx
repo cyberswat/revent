@@ -9,7 +9,7 @@ import { clearEvents, fetchEvents } from '../eventActions'
 import { Grid, Loader } from 'semantic-ui-react'
 
 export default function EventDashboard() {
-  const limit = 2
+  const limit = 5
   const dispatch = useDispatch()
   const { events, moreEvents } = useSelector((state) => state.event)
   const { loading } = useSelector((state) => state.async)

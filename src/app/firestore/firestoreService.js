@@ -129,17 +129,17 @@ export async function setMainPhoto(photo) {
   const user = firebase.auth().currentUser;
   const today = new Date();
   const eventDocQuery = db
-    .collection("events")
-    .where("attendeeIds", "array-contains", user.uid)
-    .where("date", ">=", today);
+    .collection('events')
+    .where('attendeeIds', 'array-contains', user.uid)
+    .where('date', '>=', today);
   const userFollowingRef = db
-    .collection("following")
+    .collection('following')
     .doc(user.uid)
-    .collection("userFollowing");
+    .collection('userFollowing');
 
   const batch = db.batch();
 
-  batch.update(db.collection("users").doc(user.uid), {
+  batch.update(db.collection('users').doc(user.uid), {
     photoURL: photo.url,
   });
 
@@ -164,13 +164,13 @@ export async function setMainPhoto(photo) {
     const userFollowingSnap = await userFollowingRef.get();
     userFollowingSnap.docs.forEach((docRef) => {
       let followingDocRef = db
-        .collection("following")
+        .collection('following')
         .doc(docRef.id)
-        .collection("userFollowers")
+        .collection('userFollowers')
         .doc(user.uid);
       batch.update(followingDocRef, {
-        photoURL: photo.url,
-      });
+        photoURL: photo.url
+      })
     });
 
     await batch.commit();
@@ -182,6 +182,7 @@ export async function setMainPhoto(photo) {
     throw error;
   }
 }
+
 export function deletePhotoFromCollection(photoId) {
   const userUid = firebase.auth().currentUser.uid;
   return db
